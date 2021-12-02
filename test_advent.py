@@ -23,12 +23,12 @@ def test_can_generate_windows():
         [269, 260, 263]]
 
 
-def test_foo():
+def test_can_count_number_of_increases_over_windows():
     input = get_readings()
     data = windows(input, 3)
-    window_sums = (sum(window) for window in data)
-    count = count_increases(window_sums)
-    assert count == 1418
+    window_totals = (sum(window) for window in data)
+    total_increases = count_increases(window_totals)
+    assert total_increases == 1418
 
 
 def test_bar():
