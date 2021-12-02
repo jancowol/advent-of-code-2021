@@ -19,3 +19,9 @@ def windows(input, window_size):
 
 def get_readings():
     return list(int(z) for z in read_file('input'))
+
+
+def sum_windows(data, window_size):
+    window_sets = windows(data, window_size)
+    window_totals = (sum(window) for window in window_sets)
+    return window_totals
