@@ -31,9 +31,11 @@ def test_can_sum_over_windows():
     window_4_sums = sum_windows(input, 4)
     assert list(window_4_sums) == [817, 818, 825, 857, 916, 976, 1032]
 
+
 def test_can_count_number_of_increases_over_windows():
-    total_increases = count_window_set_increases()
-    assert total_increases == 1418
+    input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+    total_increases = count_window_set_increases(input, 3)
+    assert total_increases == 5
 
 
 def count_window_set_increases(readings=None, window_size=3):
