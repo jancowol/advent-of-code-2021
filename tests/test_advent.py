@@ -14,7 +14,7 @@ def test_can_count_increases():
 
 def test_can_generate_windows():
     input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
-    window_groups = windows(input, 3)
+    window_groups = advent.windows(input, 3)
     assert list(window_groups) == [
         [199, 200, 208],
         [200, 208, 210],
@@ -48,7 +48,7 @@ def count_window_set_increases(readings=None, window_size=3):
 
 
 def sum_windows(data, window_size):
-    window_sets = windows(data, window_size)
+    window_sets = advent.windows(data, window_size)
     window_totals = (sum(window) for window in window_sets)
     return window_totals
 
@@ -99,6 +99,3 @@ def test_calc_aim():
 def get_readings():
     return list(int(z) for z in advent.read_file('input'))
 
-
-def windows(input, window_size):
-    return (input[i:i+window_size] for i in range(0, len(input) - window_size + 1))

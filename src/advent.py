@@ -11,3 +11,7 @@ def count_increases(data):
             count += 1
         prev = next
     return count
+
+
+def windows(input, window_size):
+    return (input[i:i+window_size] for i in range(0, len(input) - window_size + 1))
