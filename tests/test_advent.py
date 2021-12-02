@@ -8,7 +8,7 @@ def test_can_read_file():
 
 def test_can_count_increases():
     data = get_readings()
-    count = count_increases(data)
+    count = advent.count_increases(data)
     assert count == 1374
 
 
@@ -44,7 +44,7 @@ def test_can_count_number_of_increases_over_windows():
 def count_window_set_increases(readings=None, window_size=3):
     input = readings or get_readings()
     window_totals = sum_windows(input, window_size)
-    return count_increases(window_totals)
+    return advent.count_increases(window_totals)
 
 
 def sum_windows(data, window_size):
@@ -102,13 +102,3 @@ def get_readings():
 
 def windows(input, window_size):
     return (input[i:i+window_size] for i in range(0, len(input) - window_size + 1))
-
-
-def count_increases(data):
-    prev = None
-    count = 0
-    for next in data:
-        if(prev != None and next > prev):
-            count += 1
-        prev = next
-    return count
