@@ -25,3 +25,9 @@ def sum_windows(data, window_size):
     window_sets = windows(data, window_size)
     window_totals = (sum(window) for window in window_sets)
     return window_totals
+
+
+def count_window_set_increases(readings=None, window_size=3):
+    input = readings or get_readings()
+    window_totals = sum_windows(input, window_size)
+    return count_increases(window_totals)

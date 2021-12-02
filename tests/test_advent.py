@@ -37,14 +37,8 @@ def test_can_sum_over_windows():
 
 def test_can_count_number_of_increases_over_windows():
     input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
-    total_increases = count_window_set_increases(input, 3)
+    total_increases = advent.count_window_set_increases(input, 3)
     assert total_increases == 5
-
-
-def count_window_set_increases(readings=None, window_size=3):
-    input = readings or advent.get_readings()
-    window_totals = advent.sum_windows(input, window_size)
-    return advent.count_increases(window_totals)
 
 
 def test_bar():
