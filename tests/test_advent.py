@@ -54,17 +54,24 @@ def test_can_count_number_of_increases_over_windows():
 
 def test_bar():
     input = advent.read_file('course')
-    zoo = list(x.split(' ') for x in input)
-    down_total = sum(int(x[1]) for x in zoo if x[0] == 'down')
-    up_total = sum(int(x[1]) for x in zoo if x[0] == 'up')
-    depth = down_total - up_total
-    forward_total = sum(int(x[1]) for x in zoo if x[0] == 'forward')
+    boo = [(y[0], int(y[1])) for y in (x.split(' ') for x in input)]
 
-    # print(down_total)
-    # print(up_total)
-    # print(depth)
-    # print(forward_total)
-    # print(depth * forward_total)
+    forward_total, down_total, up_total = aggregate_course_steps(boo)
+
+    depth = down_total - up_total
+
+    print(down_total)
+    print(up_total)
+    print(depth)
+    print(forward_total)
+    print(depth * forward_total)
+
+
+def aggregate_course_steps(course_steps):
+    forward_total = sum((x[1]) for x in course_steps if x[0] == 'forward')
+    down_total = sum((x[1]) for x in course_steps if x[0] == 'down')
+    up_total = sum((x[1]) for x in course_steps if x[0] == 'up')
+    return forward_total, down_total, up_total
 
 
 def test_calc_aim():
