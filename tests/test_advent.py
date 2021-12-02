@@ -7,9 +7,9 @@ def test_can_read_file():
 
 
 def test_can_count_increases():
-    data = advent.get_readings()
+    data = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
     count = advent.count_increases(data)
-    assert count == 1374
+    assert count == 7
 
 
 def test_can_generate_windows():
