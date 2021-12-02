@@ -68,9 +68,9 @@ def test_bar():
 
 
 def aggregate_course_steps(course_steps):
-    forward_total = sum((x[1]) for x in course_steps if x[0] == 'forward')
-    down_total = sum((x[1]) for x in course_steps if x[0] == 'down')
-    up_total = sum((x[1]) for x in course_steps if x[0] == 'up')
+    forward_total = sum((step[1]) for step in course_steps if step[0] == 'forward')
+    down_total = sum((step[1]) for step in course_steps if step[0] == 'down')
+    up_total = sum((step[1]) for step in course_steps if step[0] == 'up')
     return forward_total, down_total, up_total
 
 
