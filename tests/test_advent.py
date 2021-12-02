@@ -54,10 +54,8 @@ def test_can_count_number_of_increases_over_windows():
 
 def test_bar():
     input = advent.read_file('course')
-    boo = [(y[0], int(y[1])) for y in (x.split(' ') for x in input)]
-
-    forward_total, down_total, up_total = aggregate_course_steps(boo)
-
+    course_steps = parse_course_data(input)
+    forward_total, down_total, up_total = aggregate_course_steps(course_steps)
     depth = down_total - up_total
 
     print(down_total)
@@ -67,10 +65,31 @@ def test_bar():
     print(depth * forward_total)
 
 
+class CourseStep:
+    def __init__(self, direction, value):
+        self.direction = direction
+        self.value = value
+
+    def __repr__(self):
+        return f'dir: {self.direction} / val: {self.value}'
+
+
+def parse_course_data(input):
+    return [CourseStep(step[0], int(step[1])) for step in
+            (raw_step.split(' ') for raw_step in input)]
+
+
 def aggregate_course_steps(course_steps):
-    forward_total = sum((step[1]) for step in course_steps if step[0] == 'forward')
-    down_total = sum((step[1]) for step in course_steps if step[0] == 'down')
-    up_total = sum((step[1]) for step in course_steps if step[0] == 'up')
+    # 3 * O(n) operations, could reduce to a single O(n) op using mutable approach
+    forward_total = sum(
+        step.value for step in course_steps if step.direction == 'forward')
+
+    down_total = sum(
+        step.value for step in course_steps if step.direction == 'down')
+
+    up_total = sum(
+        step.value for step in course_steps if step.direction == 'up')
+
     return forward_total, down_total, up_total
 
 
