@@ -52,17 +52,21 @@ def test_can_count_number_of_increases_over_windows():
     assert total_increases == 5
 
 
-def test_bar():
-    input = advent.read_file('course')
-    course_steps = advent.parse_course_data(input)
-    forward_total, down_total, up_total = advent.aggregate_course_steps(course_steps)
-    depth = down_total - up_total
+def test_course_step_aggregation():
+    data = [
+        advent.CourseStep('forward', 5),
+        advent.CourseStep('down', 5),
+        advent.CourseStep('forward', 8),
+        advent.CourseStep('up', 3),
+        advent.CourseStep('down', 8),
+        advent.CourseStep('forward', 2),
+        advent.CourseStep('up', 13),
+    ]
 
-    print(down_total)
-    print(up_total)
-    print(depth)
-    print(forward_total)
-    print(depth * forward_total)
+    forward_total, down_total, up_total = advent.aggregate_course_steps(data)
+    assert forward_total == 15
+    assert down_total == 13
+    assert up_total == 16
 
 
 def test_calc_aim():

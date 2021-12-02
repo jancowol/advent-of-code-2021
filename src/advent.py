@@ -59,3 +59,20 @@ def aggregate_course_steps(course_steps):
         step.value for step in course_steps if step.direction == 'up')
 
     return forward_total, down_total, up_total
+
+
+def day_2_1():
+    input = read_file('course')
+    course_steps = parse_course_data(input)
+    forward_total, down_total, up_total = aggregate_course_steps(
+        course_steps)
+
+    depth = down_total - up_total
+
+    print(down_total)
+    print(up_total)
+    print(depth)
+    print(forward_total)
+    print(depth * forward_total)
+
+day_2_1()
