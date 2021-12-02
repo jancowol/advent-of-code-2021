@@ -23,6 +23,14 @@ def test_can_generate_windows():
         [269, 260, 263]]
 
 
+def test_can_sum_over_windows():
+    input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+    window_3_sums = sum_windows(input, 3)
+    assert list(window_3_sums) == [607, 618, 618, 617, 647, 716, 769, 792]
+
+    window_4_sums = sum_windows(input, 4)
+    assert list(window_4_sums) == [817, 818, 825, 857, 916, 976, 1032]
+
 def test_can_count_number_of_increases_over_windows():
     total_increases = count_window_set_increases()
     assert total_increases == 1418
@@ -30,12 +38,12 @@ def test_can_count_number_of_increases_over_windows():
 
 def count_window_set_increases(readings=None, window_size=3):
     input = readings or get_readings()
-    window_totals = sum_windows(window_size, input)
+    window_totals = sum_windows(input, window_size)
     return count_increases(window_totals)
 
 
-def sum_windows(window_size, input):
-    window_sets = windows(input, window_size)
+def sum_windows(data, window_size):
+    window_sets = windows(data, window_size)
     window_totals = (sum(window) for window in window_sets)
     return window_totals
 
