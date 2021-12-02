@@ -7,7 +7,18 @@ def test_can_read_file():
 
 
 def test_can_count_increases():
-    data = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+    data = [
+        199,
+        200,  # increase
+        208,  # increase
+        210,  # increase
+        200,
+        207,  # increase
+        240,  # increase
+        269,  # increase
+        260,
+        263,  # increase
+    ]
     count = advent.count_increases(data)
     assert count == 7
 
