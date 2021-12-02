@@ -75,4 +75,33 @@ def day_2_1():
     print(forward_total)
     print(depth * forward_total)
 
+
+def day_2_2():
+    file = read_file('course')
+    course_steps = parse_course_data(file)
+    aim, horiz, depth = calculate_with_aim(course_steps)
+
+    print(f'horizontal: {horiz}')
+    print(f'aim: {aim}')
+    print(f'depth: {depth}')
+    print(f'calc: {depth * horiz}')
+
+
+def calculate_with_aim(course_steps):
+    aim = 0
+    horiz = 0
+    depth = 0
+    for step in course_steps:
+        if(step.direction == 'forward'):
+            horiz += step.value
+            depth += step.value * aim
+        if(step.direction == 'down'):
+            aim += step.value
+        if(step.direction == 'up'):
+            aim -= step.value
+
+    return aim, horiz, depth
+
+
 day_2_1()
+day_2_2()

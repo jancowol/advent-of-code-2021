@@ -70,28 +70,17 @@ def test_course_step_aggregation():
 
 
 def test_calc_aim():
-    # input = [('forward', 5), ('down', 5), ('forward', 8),
-    #          ('up', 3), ('down', 8), ('forward', 2)]
-    file = advent.read_file('course')
-    input = list(x.split(' ') for x in file)
-    aim = 0
-    horiz = 0
-    depth = 0
-    for step in input:
-        command = step[0]
-        value = int(step[1])
-        if(command == 'forward'):
-            horiz += value
-            depth += value * aim
-        if(command == 'down'):
-            aim += value
-        if(command == 'up'):
-            aim -= value
-        if(aim < 0):
-            print("*********************************")
-
-    print(horiz)
-    print(aim)
-    print(depth)
-    print(depth * horiz)
-    # print(input)
+    data = [
+        advent.CourseStep('forward', 5),
+        advent.CourseStep('down', 5),
+        advent.CourseStep('forward', 8),
+        advent.CourseStep('up', 3),
+        advent.CourseStep('down', 8),
+        advent.CourseStep('forward', 2),
+        advent.CourseStep('up', 1),
+        advent.CourseStep('forward', 1),
+    ]
+    aim, horiz, depth = advent.calculate_with_aim(data)
+    assert aim == 9
+    assert horiz == 16
+    assert depth == 69
