@@ -15,3 +15,7 @@ def count_increases(data):
 
 def windows(input, window_size):
     return (input[i:i+window_size] for i in range(0, len(input) - window_size + 1))
+
+
+def get_readings():
+    return list(int(z) for z in read_file('input'))

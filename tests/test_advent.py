@@ -7,7 +7,7 @@ def test_can_read_file():
 
 
 def test_can_count_increases():
-    data = get_readings()
+    data = advent.get_readings()
     count = advent.count_increases(data)
     assert count == 1374
 
@@ -42,7 +42,7 @@ def test_can_count_number_of_increases_over_windows():
 
 
 def count_window_set_increases(readings=None, window_size=3):
-    input = readings or get_readings()
+    input = readings or advent.get_readings()
     window_totals = sum_windows(input, window_size)
     return advent.count_increases(window_totals)
 
@@ -94,8 +94,3 @@ def test_calc_aim():
     print(depth)
     print(depth * horiz)
     # print(input)
-
-
-def get_readings():
-    return list(int(z) for z in advent.read_file('input'))
-
