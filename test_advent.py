@@ -11,8 +11,8 @@ def test_can_count_increases():
 
 def test_can_generate_windows():
     input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
-    groups = windows(input, 3)
-    assert list(groups) == [
+    window_groups = windows(input, 3)
+    assert list(window_groups) == [
         [199, 200, 208],
         [200, 208, 210],
         [208, 210, 200],
