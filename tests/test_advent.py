@@ -1,5 +1,8 @@
+from src import advent
+
+
 def test_can_read_file():
-    data = read_file('input')
+    data = advent.read_file('input')
     assert len(data) == 2000
 
 
@@ -51,7 +54,7 @@ def sum_windows(data, window_size):
 
 
 def test_bar():
-    input = read_file('course')
+    input = advent.read_file('course')
     zoo = list(x.split(' ') for x in input)
     down_total = sum(int(x[1]) for x in zoo if x[0] == 'down')
     up_total = sum(int(x[1]) for x in zoo if x[0] == 'up')
@@ -68,7 +71,7 @@ def test_bar():
 def test_calc_aim():
     # input = [('forward', 5), ('down', 5), ('forward', 8),
     #          ('up', 3), ('down', 8), ('forward', 2)]
-    file = read_file('course')
+    file = advent.read_file('course')
     input = list(x.split(' ') for x in file)
     aim = 0
     horiz = 0
@@ -94,7 +97,7 @@ def test_calc_aim():
 
 
 def get_readings():
-    return list(int(z) for z in read_file('input'))
+    return list(int(z) for z in advent.read_file('input'))
 
 
 def windows(input, window_size):
@@ -109,8 +112,3 @@ def count_increases(data):
             count += 1
         prev = next
     return count
-
-
-def read_file(file):
-    with open(file) as file:
-        return [line.rstrip('\n') for line in file]
