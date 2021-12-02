@@ -12,8 +12,15 @@ def test_can_count_increases():
 def test_can_generate_windows():
     input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
     groups = windows(input, 3)
-    assert list(groups) == [[199, 200, 208], [200, 208, 210], [208, 210, 200], [
-        210, 200, 207], [200, 207, 240], [207, 240, 269], [240, 269, 260], [269, 260, 263]]
+    assert list(groups) == [
+        [199, 200, 208],
+        [200, 208, 210],
+        [208, 210, 200],
+        [210, 200, 207],
+        [200, 207, 240],
+        [207, 240, 269],
+        [240, 269, 260],
+        [269, 260, 263]]
 
 
 def test_foo():
@@ -31,6 +38,7 @@ def test_bar():
     up_total = sum(int(x[1]) for x in zoo if x[0] == 'up')
     depth = down_total - up_total
     forward_total = sum(int(x[1]) for x in zoo if x[0] == 'forward')
+
     # print(down_total)
     # print(up_total)
     # print(depth)
@@ -47,15 +55,18 @@ def test_calc_aim():
     horiz = 0
     depth = 0
     for step in input:
-      command = step[0]
-      value = int(step[1])
-      if(command == 'forward'):
-        horiz += value
-        depth += value * aim
-      if(command == 'down'): aim += value
-      if(command == 'up'): aim -= value
-      if(aim < 0): print("*********************************")
-    
+        command = step[0]
+        value = int(step[1])
+        if(command == 'forward'):
+            horiz += value
+            depth += value * aim
+        if(command == 'down'):
+            aim += value
+        if(command == 'up'):
+            aim -= value
+        if(aim < 0):
+            print("*********************************")
+
     print(horiz)
     print(aim)
     print(depth)
