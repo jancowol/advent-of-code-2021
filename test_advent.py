@@ -24,11 +24,20 @@ def test_can_generate_windows():
 
 
 def test_can_count_number_of_increases_over_windows():
-    input = get_readings()
-    data = windows(input, 3)
-    window_totals = (sum(window) for window in data)
-    total_increases = count_increases(window_totals)
+    total_increases = count_window_set_increases()
     assert total_increases == 1418
+
+
+def count_window_set_increases(readings=None, window_size=3):
+    input = readings or get_readings()
+    window_totals = sum_windows(window_size, input)
+    return count_increases(window_totals)
+
+
+def sum_windows(window_size, input):
+    window_sets = windows(input, window_size)
+    window_totals = (sum(window) for window in window_sets)
+    return window_totals
 
 
 def test_bar():
