@@ -47,8 +47,6 @@ def count_window_set_increases(readings=None, window_size=3):
     return advent.count_increases(window_totals)
 
 
-
-
 def test_bar():
     input = advent.read_file('course')
     zoo = list(x.split(' ') for x in input)
