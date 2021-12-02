@@ -54,8 +54,8 @@ def test_can_count_number_of_increases_over_windows():
 
 def test_bar():
     input = advent.read_file('course')
-    course_steps = parse_course_data(input)
-    forward_total, down_total, up_total = aggregate_course_steps(course_steps)
+    course_steps = advent.parse_course_data(input)
+    forward_total, down_total, up_total = advent.aggregate_course_steps(course_steps)
     depth = down_total - up_total
 
     print(down_total)
@@ -63,34 +63,6 @@ def test_bar():
     print(depth)
     print(forward_total)
     print(depth * forward_total)
-
-
-class CourseStep:
-    def __init__(self, direction, value):
-        self.direction = direction
-        self.value = value
-
-    def __repr__(self):
-        return f'dir: {self.direction} / val: {self.value}'
-
-
-def parse_course_data(input):
-    return [CourseStep(step[0], int(step[1])) for step in
-            (raw_step.split(' ') for raw_step in input)]
-
-
-def aggregate_course_steps(course_steps):
-    # 3 * O(n) operations, could reduce to a single O(n) op using mutable approach
-    forward_total = sum(
-        step.value for step in course_steps if step.direction == 'forward')
-
-    down_total = sum(
-        step.value for step in course_steps if step.direction == 'down')
-
-    up_total = sum(
-        step.value for step in course_steps if step.direction == 'up')
-
-    return forward_total, down_total, up_total
 
 
 def test_calc_aim():
