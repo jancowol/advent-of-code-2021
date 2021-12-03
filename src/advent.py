@@ -6,6 +6,10 @@ def read_file(file):
         return [line.rstrip('\n') for line in file]
 
 
+def day_1_1():
+    input = get_readings()
+    print(count_increases(input))
+
 def day_1_2():
     print(count_window_set_increases())
 
@@ -155,9 +159,11 @@ def day_3_2():
     print(f'Life support rating: {oxy_int * co2_int}')
 
 
+print('============= Day 1, part 1 =============')
+day_1_1()
+
 print('============= Day 1, part 2 =============')
 day_1_2()
-
 
 print('============= Day 2, part 1 =============')
 day_2_1()
