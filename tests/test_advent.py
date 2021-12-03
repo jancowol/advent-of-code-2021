@@ -156,6 +156,37 @@ def test_life_support_rating():
     oxy_rating = calc_oxygen_gen_rating(data, 5)
     assert oxy_rating == '10111'
 
+    result = calc_co2_scrubber(data, 5)
+    assert result == '01010'
+
+def test_calc_real_life_support():
+    data = advent.read_file('diagnostic')
+
+    oxy_rating = calc_oxygen_gen_rating(data, 12)
+    print(oxy_rating)
+    oxy_int = int(oxy_rating, 2)
+    print(oxy_int)
+
+    co2_scrubber = calc_co2_scrubber(data, 12)
+    print(co2_scrubber)
+    co2_int = int(co2_scrubber, 2)
+    print(co2_int)
+
+    print(oxy_int * co2_int)
+
+def calc_co2_scrubber(data, bit_count):
+    for index in range(bit_count):
+        data = filter_co2_scrubber(data, index)
+        if(len(data) == 1):
+            break
+    return data[0]
+
+
+def filter_co2_scrubber(data, bit_index):
+    oncount, offcount = count_bits(data, bit_index)
+    least = '1' if oncount < offcount else '0'
+    return [x for x in data if x[bit_index] == least]
+
 
 def calc_oxygen_gen_rating(filtered, bits):
     for index in range(bits):
@@ -165,15 +196,10 @@ def calc_oxygen_gen_rating(filtered, bits):
 
 def filter_oxy(data, bit_index):
     boot = bit_index
-    dominant = find_dominant_value_oxy(data, boot)
-    filtered = [x for x in data if x[boot] == dominant]
-    return filtered
-
-
-def find_dominant_value_oxy(data, bit_index):
     oncount, offcount = count_bits(data, bit_index)
     dominant = '1' if oncount >= offcount else '0'
-    return dominant
+    filtered = [x for x in data if x[boot] == dominant]
+    return filtered
 
 
 def count_bits(data, bit_index):
