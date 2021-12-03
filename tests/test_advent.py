@@ -109,8 +109,10 @@ def test_power_consumption():
     for foo in data:
         next = 0
         for boo in foo:
-            if(boo == '1'): oncounts[next] += 1
-            if(boo == '0'): offcounts[next] += 1
+            if(boo == '1'):
+                oncounts[next] += 1
+            if(boo == '0'):
+                offcounts[next] += 1
             next += 1
     print(oncounts)
     print(offcounts)
@@ -133,3 +135,36 @@ def test_power_consumption():
 
     power_cons = gamma_int * epsilon_int
     print(f'power cons: {power_cons}')
+
+
+def test_life_support_rating():
+    data = [
+        '00100',
+        '11110',
+        '10110',
+        '10111',
+        '10101',
+        '01111',
+        '00111',
+        '11100',
+        '10000',
+        '11001',
+        '00010',
+        '01010',
+    ]
+    dominant = find_dominant_value_oxy(data)
+    print(dominant)
+
+
+def find_dominant_value_oxy(data):
+    oncount = 0
+    offcount = 0
+    for reading in data:
+        if(reading[0] == '1'):
+            oncount += 1
+        else:
+            offcount += 1
+    print(oncount)
+    print(offcount)
+    dominant = '1' if oncount >= offcount else '0'
+    return dominant
