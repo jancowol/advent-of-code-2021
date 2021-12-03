@@ -10,6 +10,7 @@ def day_1_1():
     input = get_readings()
     print(count_increases(input))
 
+
 def day_1_2():
     print(count_window_set_increases())
 
