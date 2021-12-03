@@ -153,8 +153,8 @@ def test_life_support_rating():
         '01010',
     ]
 
-    result = calc_oxygen_gen_rating(data, 5)
-    assert result == '10111'
+    oxy_rating = calc_oxygen_gen_rating(data, 5)
+    assert oxy_rating == '10111'
 
 
 def calc_oxygen_gen_rating(filtered, bits):
@@ -171,6 +171,12 @@ def filter_oxy(data, bit_index):
 
 
 def find_dominant_value_oxy(data, bit_index):
+    oncount, offcount = count_bits(data, bit_index)
+    dominant = '1' if oncount >= offcount else '0'
+    return dominant
+
+
+def count_bits(data, bit_index):
     oncount = 0
     offcount = 0
     for reading in data:
@@ -178,7 +184,4 @@ def find_dominant_value_oxy(data, bit_index):
             oncount += 1
         else:
             offcount += 1
-    print(oncount)
-    print(offcount)
-    dominant = '1' if oncount >= offcount else '0'
-    return dominant
+    return oncount, offcount
