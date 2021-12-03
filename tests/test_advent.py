@@ -158,20 +158,3 @@ def test_life_support_rating():
 
     result = advent.calc_co2_scrubber(data, 5)
     assert result == '01010'
-
-
-def test_calc_real_life_support():
-    data = advent.read_file('diagnostic')
-
-    oxy_rating = advent.calc_oxygen_gen_rating(data, 12)
-    print(oxy_rating)
-    oxy_int = int(oxy_rating, 2)
-    print(oxy_int)
-
-    co2_scrubber = advent.calc_co2_scrubber(data, 12)
-    print(co2_scrubber)
-    co2_int = int(co2_scrubber, 2)
-    print(co2_int)
-
-    print(oxy_int * co2_int)
-
