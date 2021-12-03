@@ -84,3 +84,45 @@ def test_calc_aim():
     assert aim == 9
     assert horiz == 16
     assert depth == 69
+
+
+def test_power_consumption():
+    data = [
+        '00100',
+        '11110',
+        '10110',
+        '10111',
+        '10101',
+        '01111',
+        '00111',
+        '11100',
+        '10000',
+        '11001',
+        '00010',
+        '01010',
+    ]
+    file = advent.read_file('diagnostic')
+    oncounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    offcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for foo in data:
+        next = 0
+        for boo in foo:
+            if(boo == '1'): oncounts[next] += 1
+            if(boo == '0'): offcounts[next] += 1
+            next += 1
+    print(oncounts)
+    print(offcounts)
+    gamma = ''
+    epsilon = ''
+    for zoo in range(5):
+        if(oncounts[zoo] > offcounts[zoo]):
+            gamma += '1'
+            epsilon += '0'
+        else:
+            gamma += '0'
+            epsilon += '1'
+    gamma_int = int(gamma, 2)
+    print(gamma_int)
+
+    epsilon_int = int(epsilon, 2)
+    print(epsilon_int)
