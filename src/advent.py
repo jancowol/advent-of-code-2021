@@ -116,10 +116,11 @@ def filter_co2_scrubber(data, bit_index):
     return [x for x in data if x[bit_index] == least]
 
 
-def calc_oxygen_gen_rating(filtered, bits):
-    for index in range(bits):
-        filtered = filter_oxy(filtered, index)
-    return filtered[0]
+def calc_oxygen_gen_rating(data, bit_index=0):
+    if(len(data) == 1):
+        return data[0]
+    filtered = filter_oxy(data, bit_index)
+    return calc_oxygen_gen_rating(filtered, bit_index + 1)
 
 
 def filter_oxy(data, bit_index):
@@ -144,7 +145,7 @@ def count_bits(data, bit_index):
 def day_3_2():
     data = read_file('diagnostic')
 
-    oxy_rating = calc_oxygen_gen_rating(data, 12)
+    oxy_rating = calc_oxygen_gen_rating(data)
     oxy_int = int(oxy_rating, 2)
 
     co2_scrubber = calc_co2_scrubber(data)

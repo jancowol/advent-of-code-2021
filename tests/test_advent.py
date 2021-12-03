@@ -153,7 +153,7 @@ def test_calc_oxygen_generator_rating():
         '01010',
     ]
 
-    oxy_rating = advent.calc_oxygen_gen_rating(data, 5)
+    oxy_rating = advent.calc_oxygen_gen_rating(data)
     assert oxy_rating == '10111'
 
 
@@ -174,5 +174,3 @@ def test_calc_co2_scrubber():
     ]
     result = advent.calc_co2_scrubber(data, 0)
     assert result == '01010'
-
-
