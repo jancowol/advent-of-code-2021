@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+
+
 def read_file(file):
     with open(file) as file:
         return [line.rstrip('\n') for line in file]
@@ -33,13 +36,10 @@ def count_window_set_increases(readings=None, window_size=3):
     return count_increases(window_totals)
 
 
+@dataclass
 class CourseStep:
-    def __init__(self, direction, value):
-        self.direction = direction
-        self.value = value
-
-    def __repr__(self):
-        return f'dir: {self.direction} / val: {self.value}'
+    direction: str
+    value: int
 
 
 def parse_course_data(input):
