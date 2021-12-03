@@ -103,12 +103,11 @@ def calculate_with_aim(course_steps):
     return aim, horiz, depth
 
 
-def calc_co2_scrubber(data, bit_count):
-    for index in range(bit_count):
-        data = filter_co2_scrubber(data, index)
-        if(len(data) == 1):
-            break
-    return data[0]
+def calc_co2_scrubber(data, bit_index=0):
+    if(len(data) == 1):
+        return data[0]
+    filtered = filter_co2_scrubber(data, bit_index)
+    return calc_co2_scrubber(filtered, bit_index + 1)
 
 
 def filter_co2_scrubber(data, bit_index):
@@ -148,7 +147,7 @@ def day_3_2():
     oxy_rating = calc_oxygen_gen_rating(data, 12)
     oxy_int = int(oxy_rating, 2)
 
-    co2_scrubber = calc_co2_scrubber(data, 12)
+    co2_scrubber = calc_co2_scrubber(data)
     co2_int = int(co2_scrubber, 2)
 
     print(f'Oxygen generator rating: {oxy_int}')

@@ -137,7 +137,7 @@ def test_power_consumption():
     print(f'power cons: {power_cons}')
 
 
-def test_life_support_rating():
+def test_calc_oxygen_generator_rating():
     data = [
         '00100',
         '11110',
@@ -156,5 +156,23 @@ def test_life_support_rating():
     oxy_rating = advent.calc_oxygen_gen_rating(data, 5)
     assert oxy_rating == '10111'
 
-    result = advent.calc_co2_scrubber(data, 5)
+
+def test_calc_co2_scrubber():
+    data = [
+        '00100',
+        '11110',
+        '10110',
+        '10111',
+        '10101',
+        '01111',
+        '00111',
+        '11100',
+        '10000',
+        '11001',
+        '00010',
+        '01010',
+    ]
+    result = advent.calc_co2_scrubber(data, 0)
     assert result == '01010'
+
+
