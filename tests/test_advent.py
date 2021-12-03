@@ -153,12 +153,14 @@ def test_life_support_rating():
         '01010',
     ]
 
-    filtered = data
-    for index in range(5):
-        filtered = filter_oxy(filtered, index)
-    result = filtered[0]
-    print(filtered)
+    result = calc_oxygen_gen_rating(data, 5)
     assert result == '10111'
+
+
+def calc_oxygen_gen_rating(filtered, bits):
+    for index in range(bits):
+        filtered = filter_oxy(filtered, index)
+    return filtered[0]
 
 
 def filter_oxy(data, bit_index):
