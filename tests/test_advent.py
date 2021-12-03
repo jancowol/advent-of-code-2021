@@ -152,15 +152,27 @@ def test_life_support_rating():
         '00010',
         '01010',
     ]
-    dominant = find_dominant_value_oxy(data)
-    print(dominant)
+
+    filtered = data
+    for index in range(5):
+        filtered = filter_oxy(filtered, index)
+    result = filtered[0]
+    print(filtered)
+    assert result == '10111'
 
 
-def find_dominant_value_oxy(data):
+def filter_oxy(data, bit_index):
+    boot = bit_index
+    dominant = find_dominant_value_oxy(data, boot)
+    filtered = [x for x in data if x[boot] == dominant]
+    return filtered
+
+
+def find_dominant_value_oxy(data, bit_index):
     oncount = 0
     offcount = 0
     for reading in data:
-        if(reading[0] == '1'):
+        if(reading[bit_index] == '1'):
             oncount += 1
         else:
             offcount += 1
