@@ -174,3 +174,25 @@ def test_calc_co2_scrubber():
     ]
     result = advent.calc_co2_scrubber(data, 0)
     assert result == '01010'
+
+
+def test_count_bits():
+    data = [
+        '00100',
+        '11110',
+        '10110',
+        '10111',
+        '10101',
+        '01111',
+        '00111',
+        '11100',
+        '10000',
+        '11001',
+        '00010',
+        '01010',
+    ]
+    assert advent.count_bits(data, 0) == (7, 5)
+    assert advent.count_bits(data, 1) == (5, 7)
+    assert advent.count_bits(data, 2) == (8, 4)
+    assert advent.count_bits(data, 3) == (7, 5)
+    assert advent.count_bits(data, 4) == (5, 7)

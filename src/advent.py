@@ -132,14 +132,9 @@ def filter_oxy(data, bit_index):
 
 
 def count_bits(data, bit_index):
-    oncount = 0
-    offcount = 0
-    for reading in data:
-        if(reading[bit_index] == '1'):
-            oncount += 1
-        else:
-            offcount += 1
-    return oncount, offcount
+    on = sum(1 for reading in data if reading[bit_index] == '1')
+    off = len(data) - on
+    return on, off
 
 
 def day_3_2():
