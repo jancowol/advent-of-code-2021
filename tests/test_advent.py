@@ -102,6 +102,8 @@ def test_power_consumption():
         '01010',
     ]
     file = advent.read_file('diagnostic')
+    data = file
+    # print(file)
     oncounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     offcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for foo in data:
@@ -114,7 +116,7 @@ def test_power_consumption():
     print(offcounts)
     gamma = ''
     epsilon = ''
-    for zoo in range(5):
+    for zoo in range(12):
         if(oncounts[zoo] > offcounts[zoo]):
             gamma += '1'
             epsilon += '0'
@@ -122,7 +124,12 @@ def test_power_consumption():
             gamma += '0'
             epsilon += '1'
     gamma_int = int(gamma, 2)
-    print(gamma_int)
+    print(f'gamma: {gamma}')
+    print(f'gamma int: {gamma_int}')
 
     epsilon_int = int(epsilon, 2)
-    print(epsilon_int)
+    print(f'epsilon: {epsilon}')
+    print(f'epsilon: {epsilon_int}')
+
+    power_cons = gamma_int * epsilon_int
+    print(f'power cons: {power_cons}')
