@@ -103,5 +103,64 @@ def calculate_with_aim(course_steps):
     return aim, horiz, depth
 
 
+def calc_co2_scrubber(data, bit_count):
+    for index in range(bit_count):
+        data = filter_co2_scrubber(data, index)
+        if(len(data) == 1):
+            break
+    return data[0]
+
+
+def filter_co2_scrubber(data, bit_index):
+    oncount, offcount = count_bits(data, bit_index)
+    least = '1' if oncount < offcount else '0'
+    return [x for x in data if x[bit_index] == least]
+
+
+def calc_oxygen_gen_rating(filtered, bits):
+    for index in range(bits):
+        filtered = filter_oxy(filtered, index)
+    return filtered[0]
+
+
+def filter_oxy(data, bit_index):
+    boot = bit_index
+    oncount, offcount = count_bits(data, bit_index)
+    dominant = '1' if oncount >= offcount else '0'
+    filtered = [x for x in data if x[boot] == dominant]
+    return filtered
+
+
+def count_bits(data, bit_index):
+    oncount = 0
+    offcount = 0
+    for reading in data:
+        if(reading[bit_index] == '1'):
+            oncount += 1
+        else:
+            offcount += 1
+    return oncount, offcount
+
+
+def day_3_2():
+    data = read_file('diagnostic')
+
+    oxy_rating = calc_oxygen_gen_rating(data, 12)
+    oxy_int = int(oxy_rating, 2)
+
+    co2_scrubber = calc_co2_scrubber(data, 12)
+    co2_int = int(co2_scrubber, 2)
+
+    print(f'Oxygen generator rating: {oxy_int}')
+    print(f'CO2 Scrubber rating: {co2_int}')
+    print(f'Life support rating: {oxy_int * co2_int}')
+
+
+print('============= Day 2, part 1 =============')
 day_2_1()
+
+print('============= Day 2, part 2 =============')
 day_2_2()
+
+print('============= Day 3, part 2 =============')
+day_3_2()
