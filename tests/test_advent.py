@@ -1,4 +1,5 @@
 from src import advent
+from src import bingoinput
 
 
 def test_can_read_file():
@@ -230,7 +231,7 @@ def test_day4_1():
     assert board_col_contains_all(board2, numbers2) == False
     assert board_col_contains_all(board3, numbers2) == False
 
-    numbers3 = { 7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24 }
+    numbers3 = {7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24}
     assert board_wins(board1, numbers3) == False
     assert board_wins(board2, numbers3) == False
     assert board_wins(board3, numbers3) == True
@@ -241,6 +242,23 @@ def test_day4_1():
     print(unmarked_board_numbers)
     print(unmarked_num_sum)
     print(unmarked_num_sum * 24)
+
+    numbers4 = [7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10,
+                16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
+    evaluate_board_num_input(board3, numbers4)
+
+def evaluate_board_num_input(board, numbers):
+    for i in range(len(numbers)):
+        nums = numbers[:i+1]
+        print(nums)
+        if(board_wins(board, nums)):
+            print('board 3 wins')
+            last_num = nums[-1]
+            print(f'last no. is {last_num}')
+            break
+        else:
+            print('no win')
+
 
 def unmarked_numbers_in_board(marked, board):
     flat_board = [number for row in board for number in row]
