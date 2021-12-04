@@ -199,34 +199,49 @@ def test_day4_1():
                16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
 
     board1 = [
-        {22, 13, 17, 11,  0, },
-        {8,  2, 23,  4, 24, },
-        {21,  9, 14, 16,  7, },
-        {6, 10,  3, 18,  5, },
-        {1, 12, 20, 15, 19, }]
+        [22, 13, 17, 11,  0, ],
+        [8,  2, 23,  4, 24, ],
+        [21,  9, 14, 16,  7, ],
+        [6, 10,  3, 18,  5, ],
+        [1, 12, 20, 15, 19, ]]
 
     board2 = [
-        {3, 15,  0,  2, 22, },
-        {9, 18, 13, 17,  5, },
-        {19,  8,  7, 25, 23, },
-        {20, 11, 10, 24,  4, },
-        {14, 21, 16, 12,  6, }]
+        [3, 15,  0,  2, 22, ],
+        [9, 18, 13, 17,  5, ],
+        [19,  8,  7, 25, 23, ],
+        [20, 11, 10, 24,  4, ],
+        [14, 21, 16, 12,  6, ]]
 
     board3 = [
-        {14, 21, 17, 24,  4, },
-        {10, 16, 15,  9, 19, },
-        {18,  8, 23, 26, 20, },
-        {22, 11, 13,  6,  5, },
-        {2,  0, 12,  3,  7, }]
+        [14, 21, 17, 24,  4, ],
+        [10, 16, 15,  9, 19, ],
+        [18,  8, 23, 26, 20, ],
+        [22, 11, 13,  6,  5, ],
+        [2,  0,  12,  3,  7, ]]
 
     numbers = {20, 199, 11, 10, 299, 24,  4, }  # should match row 4 on board2
     assert board_row_contains_all(numbers, board1) == False
     assert board_row_contains_all(numbers, board2) == True
     assert board_row_contains_all(numbers, board3) == False
 
+    # should match column 3 on board 3
+    numbers2 = {17, 799, 15, 23, 899, 13, 12}
+    assert board_col_contains_all(board1, numbers2) == False
+    assert board_col_contains_all(board2, numbers2) == False
+    assert board_col_contains_all(board3, numbers2) == True
+
+
+def board_col_contains_all(board, numbers):
+    for i in range(len(board[0])):
+        col = [row[i] for row in board]
+        if(set(col).issubset(numbers)):
+            return True
+    return False
+
 
 def board_row_contains_all(numbers, board):
     for row in board:
-        if(row.issubset(numbers)):
+        r2 = set(row)
+        if(r2.issubset(numbers)):
             return True
     return False
