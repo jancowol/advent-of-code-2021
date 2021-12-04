@@ -195,15 +195,15 @@ def test_count_bits():
 
 
 def test_day4_1():
-    numbers = [7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10,
-               16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
+    numbers3 = [7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10,
+                16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
 
     board1 = [
         [22, 13, 17, 11,  0, ],
-        [8,  2, 23,  4, 24, ],
+        [8,  2,  23,  4, 24, ],
         [21,  9, 14, 16,  7, ],
         [6, 10,  3, 18,  5, ],
-        [1, 12, 20, 15, 19, ]]
+        [1, 12,  20, 15, 19, ]]
 
     board2 = [
         [3, 15,  0,  2, 22, ],
@@ -224,11 +224,32 @@ def test_day4_1():
     assert board_row_contains_all(numbers, board2) == True
     assert board_row_contains_all(numbers, board3) == False
 
-    # should match column 3 on board 3
-    numbers2 = {17, 799, 15, 23, 899, 13, 12}
-    assert board_col_contains_all(board1, numbers2) == False
+    # should match column 3 on board 1
+    numbers2 = {17, 23, 1999, 14, 3, 2999, 20}
+    assert board_col_contains_all(board1, numbers2) == True
     assert board_col_contains_all(board2, numbers2) == False
-    assert board_col_contains_all(board3, numbers2) == True
+    assert board_col_contains_all(board3, numbers2) == False
+
+    numbers3 = { 7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24 }
+    assert board_wins(board1, numbers3) == False
+    assert board_wins(board2, numbers3) == False
+    assert board_wins(board3, numbers3) == True
+
+    unmarked_board_numbers = unmarked_numbers_in_board(numbers3, board3)
+    unmarked_num_sum = sum(unmarked_board_numbers)
+
+    print(unmarked_board_numbers)
+    print(unmarked_num_sum)
+    print(unmarked_num_sum * 24)
+
+def unmarked_numbers_in_board(marked, board):
+    flat_board = [number for row in board for number in row]
+    unmarked = set(flat_board).difference(marked)
+    return unmarked
+
+
+def board_wins(board, numbers):
+    return board_row_contains_all(numbers, board) or board_col_contains_all(board, numbers)
 
 
 def board_col_contains_all(board, numbers):
