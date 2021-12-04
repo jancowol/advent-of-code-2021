@@ -101,40 +101,36 @@ def test_power_consumption():
         '00010',
         '01010',
     ]
-    file = advent.read_file('diagnostic')
-    data = file
-    # print(file)
-    oncounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    offcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    for foo in data:
-        next = 0
-        for boo in foo:
-            if(boo == '1'):
-                oncounts[next] += 1
-            if(boo == '0'):
-                offcounts[next] += 1
-            next += 1
-    print(oncounts)
-    print(offcounts)
-    gamma = ''
-    epsilon = ''
-    for zoo in range(12):
-        if(oncounts[zoo] > offcounts[zoo]):
-            gamma += '1'
-            epsilon += '0'
-        else:
-            gamma += '0'
-            epsilon += '1'
-    gamma_int = int(gamma, 2)
-    print(f'gamma: {gamma}')
-    print(f'gamma int: {gamma_int}')
 
-    epsilon_int = int(epsilon, 2)
-    print(f'epsilon: {epsilon}')
-    print(f'epsilon: {epsilon_int}')
+    bit_counts = [index_slice(data, i) for i in range(5)]
 
-    power_cons = gamma_int * epsilon_int
-    print(f'power cons: {power_cons}')
+    gamma = zoot(bit_counts, '1', '0')
+    assert gamma == 22
+
+    epsilon = zoot(bit_counts, '0', '1')
+    assert epsilon == 9
+
+    power_cons = gamma * epsilon
+    assert power_cons == 198
+
+
+def index_slice(data, bit_index):
+    slice = [int(reading[bit_index]) for reading in data]
+    oncount = sum(slice)
+    offcount = len(slice) - oncount
+    return oncount, offcount
+
+
+# def calculate_power_consumption():
+#     file = advent.read_file('diagnostic')
+#     data = file
+#     foo1(data)
+
+
+def zoot(bit_counts, boo, koo):
+    bits = [boo if x[0] > x[1] else koo for x in bit_counts]
+    int_of_bits = int(''.join(bits), 2)
+    return int_of_bits
 
 
 def test_calc_oxygen_generator_rating():
