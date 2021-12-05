@@ -196,9 +196,6 @@ def test_count_bits():
 
 
 def test_day4_1():
-    numbers3 = [7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10,
-                16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
-
     board1 = [
         [22, 13, 17, 11,  0, ],
         [8,  2,  23,  4, 24, ],
@@ -245,21 +242,8 @@ def test_day4_1():
 
     numbers4 = [93, 18, 74, 26, 98, 52, 94, 23, 15, 2, 34, 75, 13, 31, 39, 76, 96, 16, 84, 12, 38, 27, 8, 85, 86, 43, 4, 79, 57, 19, 40, 59, 14, 21, 35, 0, 90, 11, 32, 17, 78, 83, 54, 42, 66, 82, 99, 45,
                 55, 63, 24, 5, 89, 46, 80, 49, 3, 48, 67, 47, 50, 60, 81, 51, 71, 33, 72, 6, 9, 30, 56, 20, 77, 29, 28, 69, 25, 36, 91, 92, 65, 22, 62, 58, 64, 88, 10, 7, 87, 41, 44, 37, 73, 70, 68, 97, 61, 95, 53, 1]
-    b = [board3]
-    winning_board, winning_number_set = find_winning_board(
-        bingoinput.boards, numbers4)
-    unmarked_winning_board_numbers = unmarked_numbers_in_board(
-        winning_number_set, winning_board)
-    unmarked_sum = sum(unmarked_winning_board_numbers)
-    print(f'winning board {winning_board}')
-    print(f'board won at sequence {winning_number_set}')
-    print(f'last number in winning set {winning_number_set[-1]}')
-    print(f'unmarked winning board numbers {unmarked_winning_board_numbers}')
-    print(f'sum of unmarked winning board numbers: {unmarked_sum}')
-    print(f'final answer {unmarked_sum * winning_number_set[-1]}')
+    day_4_1(numbers4)
 
-    # numbers4 = [7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10,
-    #             16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]
     boards = bingoinput.boards
     for i in range(len(numbers4)):
         count = len(numbers4) - i
@@ -270,7 +254,8 @@ def test_day4_1():
             nwb = non_winning_boards[0]
             print(nwb)
             last_winning_board_numbers = numbers4[:count+1]
-            unmarked_winning_board_numbers = unmarked_numbers_in_board( last_winning_board_numbers, nwb)
+            unmarked_winning_board_numbers = unmarked_numbers_in_board(
+                last_winning_board_numbers, nwb)
             unmarked_sum = sum(unmarked_winning_board_numbers)
             print(f'last winning board sum of unmared nums: {unmarked_sum}')
             # print(nums)
@@ -279,17 +264,20 @@ def test_day4_1():
             print(f'last winning board final answer {last_num * unmarked_sum}')
             # print(non_winning_boards)
             break
-        # winning_boards1 = find_winning_boards(bingoinput.boards, nums)
-        # count_of_winning_boards = len(winning_boards1)
-        # print(count_of_winning_boards)
-        # if(count_of_winning_boards < 100): break
 
-        # nums = numbers4[:count-1]
-        # winning_boards2 = find_winning_boards(bingoinput.boards, nums)
-        # print(len(winning_boards2))
 
-        # print(set(winning_boards1))
-        # break
+def day_4_1(drawn_numbers):
+    winning_board, winning_number_set = find_winning_board(
+        bingoinput.boards, drawn_numbers)
+    unmarked_winning_board_numbers = unmarked_numbers_in_board(
+        winning_number_set, winning_board)
+    unmarked_sum = sum(unmarked_winning_board_numbers)
+    print(f'winning board {winning_board}')
+    print(f'board won at sequence {winning_number_set}')
+    print(f'last number in winning set {winning_number_set[-1]}')
+    print(f'unmarked winning board numbers {unmarked_winning_board_numbers}')
+    print(f'sum of unmarked winning board numbers: {unmarked_sum}')
+    print(f'final answer {unmarked_sum * winning_number_set[-1]}')
 
 
 def find_winning_board(boards, numbers):
