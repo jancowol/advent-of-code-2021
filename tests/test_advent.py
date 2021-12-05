@@ -320,3 +320,75 @@ def board_row_contains_all(numbers, board):
         if(r2.issubset(numbers)):
             return True
     return False
+
+
+def test_can_calculate_horz_vert_line_points():
+    horz_line = [(0, 9), (5, 9)]
+    expected_line_points = [(0, 9), (1, 9), (2, 9), (3, 9), (4, 9), (5, 9)]
+    h_line_points = horz_line_points(horz_line)
+    assert h_line_points == expected_line_points
+
+    horz_line2 = [(5, 9), (0, 9)]
+    h_line_points2 = horz_line_points(horz_line2)
+    assert h_line_points2 == expected_line_points
+
+    vert_line = [(7, 0), (7, 4)]
+    v_line_points = vert_line_points(vert_line)
+    assert v_line_points == [(7, 0), (7, 1), (7, 2), (7, 3), (7, 4)]
+
+    # line_points = [x for x in input[0]]
+    # print(line_points)
+    # print(horz_vert_lines)
+
+
+def test_foo():
+    # foo = read_day5_input()
+    test_input = [
+        [(0, 9), (5, 9)],
+        [(8, 0), (0, 8)],
+        [(9, 4), (3, 4)],
+        [(2, 2), (2, 1)],
+        [(7, 0), (7, 4)],
+        [(6, 4), (2, 0)],
+        [(0, 9), (2, 9)],
+        [(3, 4), (1, 4)],
+        [(0, 0), (8, 8)],
+        [(5, 5), (8, 2)]]
+    # print(test_input)
+
+    input = test_input
+    horz_vert_lines = [line for line in input if line[0]
+                       [0] == line[1][0] or line[0][1] == line[1][1]]
+
+
+def vert_line_points(line):
+    pt1, pt2 = line
+    if(pt1[1] < pt2[1]):
+        s = pt1[1]
+        e = pt2[1]
+    else:
+        s = pt2[1]
+        e = pt1[1]
+
+    line_points = [(pt1[0], y) for y in range(s, e + 1)]
+    return line_points
+
+
+def horz_line_points(line):
+    pt1, pt2 = line
+    if(pt1[0] < pt2[0]):
+        s = pt1[0]
+        e = pt2[0]
+    else:
+        s = pt2[0]
+        e = pt1[0]
+
+    line_points = [(x, pt1[1]) for x in range(s, e + 1)]
+    return line_points
+
+
+def read_day5_input():
+    file_data = advent.read_file('day5-input')
+    foo = [[y[0].strip(), y[1].strip()]
+           for y in [x.split('->') for x in file_data]]
+    return foo
