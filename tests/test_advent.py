@@ -1,5 +1,5 @@
-from src import advent
-from src import bingoinput
+from advent import advent
+from advent import bingoinput
 
 
 def test_can_read_file():
