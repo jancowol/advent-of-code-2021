@@ -336,29 +336,53 @@ def test_can_calculate_horz_vert_line_points():
     v_line_points = vert_line_points(vert_line)
     assert v_line_points == [(7, 0), (7, 1), (7, 2), (7, 3), (7, 4)]
 
-    # line_points = [x for x in input[0]]
-    # print(line_points)
-    # print(horz_vert_lines)
-
 
 def test_foo():
-    # foo = read_day5_input()
-    test_input = [
-        [(0, 9), (5, 9)],
-        [(8, 0), (0, 8)],
-        [(9, 4), (3, 4)],
-        [(2, 2), (2, 1)],
-        [(7, 0), (7, 4)],
-        [(6, 4), (2, 0)],
-        [(0, 9), (2, 9)],
-        [(3, 4), (1, 4)],
-        [(0, 0), (8, 8)],
-        [(5, 5), (8, 2)]]
-    # print(test_input)
+    input = read_day5_input()
+    # break
+    # print(input)
+    # input = [
+    #     [(0, 9), (5, 9)],
+    #     [(8, 0), (0, 8)],
+    #     [(9, 4), (3, 4)],
+    #     [(2, 2), (2, 1)],
+    #     [(7, 0), (7, 4)],
+    #     [(6, 4), (2, 0)],
+    #     [(0, 9), (2, 9)],
+    #     [(3, 4), (1, 4)],
+    #     [(0, 0), (8, 8)],
+    #     [(5, 5), (8, 2)]]
 
-    input = test_input
-    horz_vert_lines = [line for line in input if line[0]
-                       [0] == line[1][0] or line[0][1] == line[1][1]]
+    h_lines = [line for line in input if (
+        line[0][0] != line[1][0]) and (line[0][1] == line[1][1])]
+    h_line_points_sets = [horz_line_points(line) for line in h_lines]
+    h_line_points = [
+        point for pointset in h_line_points_sets for point in pointset]
+
+    v_lines = [line for line in input if (
+        line[0][1] != line[1][1]) and (line[0][0] == line[1][0])]
+    v_line_points_sets = [vert_line_points(line) for line in v_lines]
+    v_line_points = [
+        point for pointset in v_line_points_sets for point in pointset]
+
+    d_lines = [line for line in input if (
+        line[0][1] != line[1][1]) and (line[0][0] != line[1][0])]
+    d_line_points_sets = [diag_line_points(line) for line in d_lines]
+    d_line_points = [
+        point for pointset in d_line_points_sets for point in pointset]
+
+    all_points = h_line_points + v_line_points + d_line_points
+    blah = {}
+    for point in all_points:
+        count = blah.get(point, 0)
+        blah.update({point: count + 1})
+    fooz = [y for y in blah.items() if y[1] > 1]
+    x = [f'{y}: {y[1]}' for y in fooz]
+
+    for y in x:
+        print(y)
+
+    print(f'overlapping points count: {len(fooz)}')
 
 
 def vert_line_points(line):
@@ -372,6 +396,20 @@ def vert_line_points(line):
 
     line_points = [(pt1[0], y) for y in range(s, e + 1)]
     return line_points
+
+
+def diag_line_points(line):
+    return get_line(line)
+    # pt1, pt2 = line
+    # if(pt1[1] < pt2[1]):
+    #     s = pt1[1]
+    #     e = pt2[1]
+    # else:
+    #     s = pt2[1]
+    #     e = pt1[1]
+
+    # line_points = [(pt1[0], y) for y in range(s, e + 1)]
+    # return line_points
 
 
 def horz_line_points(line):
@@ -389,6 +427,55 @@ def horz_line_points(line):
 
 def read_day5_input():
     file_data = advent.read_file('day5-input')
-    foo = [[y[0].strip(), y[1].strip()]
-           for y in [x.split('->') for x in file_data]]
+    foo = [split_foo(y) for y in [x.split('->') for x in file_data]]
+    # print(foo)
+    # bar = [(y[0].split(','), y[1].split(',')) for y in foo]
+    # print(bar)
     return foo
+
+
+def split_foo(y):
+    bar = y[0].strip(), y[1].strip()
+    fooz = bar[0].split(','), bar[1].split(',')
+    return [(int(fooz[0][0]), int(fooz[0][1])), (int(fooz[1][0]), int(fooz[1][1]))]
+
+def test_get_points():
+    print(get_line([(0, 6), (6, 0)]))
+
+def get_line(line):
+    x1 = line[0][0]
+    y1 = line[0][1]
+    x2 = line[1][0]
+    y2 = line[1][1]
+    points = []
+    issteep = abs(y2-y1) > abs(x2-x1)
+    if issteep:
+        x1, y1 = y1, x1
+        x2, y2 = y2, x2
+    rev = False
+    if x1 > x2:
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+        rev = True
+    deltax = x2 - x1
+    deltay = abs(y2-y1)
+    error = int(deltax / 2)
+    y = y1
+    ystep = None
+    if y1 < y2:
+        ystep = 1
+    else:
+        ystep = -1
+    for x in range(x1, x2 + 1):
+        if issteep:
+            points.append((y, x))
+        else:
+            points.append((x, y))
+        error -= deltay
+        if error < 0:
+            y += ystep
+            error += deltax
+    # Reverse the list if the coordinates were reversed
+    if rev:
+        points.reverse()
+    return points
