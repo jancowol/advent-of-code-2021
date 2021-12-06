@@ -379,8 +379,8 @@ def test_foo():
     fooz = [y for y in blah.items() if y[1] > 1]
     x = [f'{y}: {y[1]}' for y in fooz]
 
-    for y in x:
-        print(y)
+    # for y in x:
+    #     print(y)
 
     print(f'overlapping points count: {len(fooz)}')
 
@@ -439,8 +439,11 @@ def split_foo(y):
     fooz = bar[0].split(','), bar[1].split(',')
     return [(int(fooz[0][0]), int(fooz[0][1])), (int(fooz[1][0]), int(fooz[1][1]))]
 
+
 def test_get_points():
+    pass
     print(get_line([(0, 6), (6, 0)]))
+
 
 def get_line(line):
     x1 = line[0][0]
@@ -479,3 +482,72 @@ def get_line(line):
     if rev:
         points.reverse()
     return points
+
+
+class Fish():
+    def __init__(self, clock):
+        self.clock = clock
+
+    def day_tick(self):
+        self.clock -= 1
+        if(self.clock == -1):
+            self.clock = 6
+            return 8
+        # if(self.clock )
+        # return 8
+
+
+def test_day_6_1_model_fish_internal_clock():
+    f = Fish(3)
+
+    f.day_tick()
+    assert f.clock == 2
+
+    f.day_tick()
+    assert f.clock == 1
+
+    result = f.day_tick()
+    assert f.clock == 0
+    assert result == None
+
+    result = f.day_tick()
+    assert f.clock == 6
+    assert result == 8
+
+
+def test_day_6_1_model_fish_school():
+    fish_clocks = [3, 4, 3, 1, 2]
+    expected_after_18_days = [6, 0, 6, 4, 5, 6, 0, 1, 1,
+                              2, 6, 0, 1, 1, 1, 2, 2, 3, 3, 4, 6, 7, 8, 8, 8, 8]
+
+    school = [Fish(clock) for clock in fish_clocks]
+
+    result_school = model_school_spawn(school, 18)
+
+    end_fish_clocks = [f.clock for f in result_school]
+    assert end_fish_clocks == expected_after_18_days
+
+def test_against_advent_example():
+    fish_clocks = [3, 4, 3, 1, 2]
+
+    result_school = model_school_from_clocks(fish_clocks)
+
+    assert len(result_school) == 5934
+
+def model_school_from_clocks(fish_clocks):
+    school = [Fish(clock) for clock in fish_clocks]
+    return model_school_spawn(school, 80)
+
+def test_solve_day_6_1():
+    puzzle_input = [1,1,3,5,1,3,2,1,5,3,1,4,4,4,1,1,1,3,1,4,3,1,2,2,2,4,1,1,5,5,4,3,1,1,1,1,1,1,3,4,1,2,2,5,1,3,5,1,3,2,5,2,2,4,1,1,1,4,3,3,3,1,1,1,1,3,1,3,3,4,4,1,1,5,4,2,2,5,4,5,2,5,1,4,2,1,5,5,5,4,3,1,1,4,1,1,3,1,3,4,1,1,2,4,2,1,1,2,3,1,1,1,4,1,3,5,5,5,5,1,2,2,1,3,1,2,5,1,4,4,5,5,4,1,1,3,3,1,5,1,1,4,1,3,3,2,4,2,4,1,5,5,1,2,5,1,5,4,3,1,1,1,5,4,1,1,4,1,2,3,1,3,5,1,1,1,2,4,5,5,5,4,1,4,1,4,1,1,1,1,1,5,2,1,1,1,1,2,3,1,4,5,5,2,4,1,5,1,3,1,4,1,1,1,4,2,3,2,3,1,5,2,1,1,4,2,1,1,5,1,4,1,1,5,5,4,3,5,1,4,3,4,4,5,1,1,1,2,1,1,2,1,1,3,2,4,5,3,5,1,2,2,2,5,1,2,5,3,5,1,1,4,5,2,1,4,1,5,2,1,1,2,5,4,1,3,5,3,1,1,3,1,4,4,2,2,4,3,1,1]
+    result = model_school_from_clocks(puzzle_input)
+    print(f'***** day 6.1 {len(result)}')
+
+
+def model_school_spawn(initial_school, simulation_days):
+    school = initial_school
+    for i in range(simulation_days):
+        new_fish = [Fish(new_fish_age) for new_fish_age in (
+            foo.day_tick() for foo in school) if new_fish_age != None]
+        school += new_fish
+    return school
