@@ -8,7 +8,6 @@ def count_many_generations(input, days):
         fish_count_for_clock = dict.get(clock, 0)
         dict.update({clock: fish_count_for_clock + 1})
 
-    print('********************')
     dict2 = dict
     for i in range(days):
         dict2[-1] = dict2.get(0, 0)
