@@ -1,7 +1,7 @@
 import time
-import functools
 from advent import advent
 from advent import bingoinput
+import advent.day7 as d7
 
 
 def test_can_read_file():
@@ -651,10 +651,5 @@ def incremental_fuel_cost_at(pos, positions):
 
 def calc_incremental_fuel_cost(current, destination):
     movements = abs(current - destination)
-    cost = seq_sum(movements)
+    cost = d7.seq_sum(movements)
     return cost
-
-
-@functools.lru_cache(2048)
-def seq_sum(count):
-    return .5 * count * (count + 1)
