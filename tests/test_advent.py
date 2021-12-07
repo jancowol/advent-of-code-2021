@@ -1,4 +1,3 @@
-import time
 from advent import advent
 from advent import bingoinput
 
