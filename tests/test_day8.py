@@ -1,4 +1,4 @@
-from advent import advent
+import advent.day8 as d8
 
 test_input = [
     'be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe',
@@ -13,30 +13,10 @@ test_input = [
     'gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce      ']
 
 
-def test_read_file():
-    result = advent.read_file('day8-input')
-    readings = [parse_line(x) for x in result]
-
-
 def test_can_count_unique_digits():
-    lines = parse_lines(test_input)
-    unique = [find_unique_segment_digits(x[1]) for x in lines]
-    count = sum([len(x) for x in unique])
-    assert count == 26
-
-
-def parse_lines(input):
-    parsed_input = [parse_line(line) for line in input]
-    return parsed_input
-
-
-def read_input():
-    result = advent.read_file('day8-input')
-    return [parse_line(x) for x in result]
-
-
-def find_unique_segment_digits(foo):
-    return [x for x in foo if len(x) == 2 or len(x) == 3 or len(x) == 4 or len(x) == 7]
+    lines = d8.parse_lines(test_input)
+    unique_digit_count = d8.count_unique_output_digits(lines)
+    assert unique_digit_count == 26
 
 
 def test_part_2():
@@ -45,9 +25,9 @@ def test_part_2():
     output_sum = 0
     test_input = 'be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe'
 
-    for x in read_input():
-      val = blahblahblah(x)
-      output_sum += val
+    for x in d8.read_input():
+        val = blahblahblah(x)
+        output_sum += val
     # output_val = blahblahblah(parse_line(test_input))
 
     # output_sum += output_val
@@ -109,12 +89,3 @@ def bloop(known_signal_set, x):
 def map_known_input_signals(signals, digit, seg_count):
     sig_for_digit = [x for x in signals if len(x) == seg_count][0]
     return {digit: set(sig_for_digit)}
-
-
-def parse_line(x):
-    line_parts = x.split('|')
-    signals = line_parts[0].strip()
-    sig_parts = signals.split(' ')
-    output = line_parts[1].strip()
-    output_parts = output.split(' ')
-    return (sig_parts, output_parts)
