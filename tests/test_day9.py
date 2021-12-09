@@ -124,7 +124,7 @@ def find_low_points(map):
     x_limit = max_x.x
     y_limit = max_y.y
     foo = [point for point in map if map[point] < min(
-        [map[foo] for foo in point.adjacents2()])] # filter_to_map_points(point, x_limit, y_limit)])]
+        [map[foo] for foo in point.adjacents2()])]
 
     return foo
 
@@ -138,7 +138,3 @@ def build_map(input, x_limit=99, y_limit=99):
     m3 = [item for sub in m2 for item in sub]
     m4 = {kv[0]: kv[1] for kv in m3}
     return m4
-
-
-def filter_to_map_points(point, x_limit, y_limit):
-    return [p for p in point.adjacents() if p.x >= 0 and p.y >= 0 and p.x <= x_limit and p.y <= y_limit]
