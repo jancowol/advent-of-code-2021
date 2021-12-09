@@ -21,14 +21,14 @@ class Point:
     def __hash__(self):
         return hash(str(self))
 
-    def adjacents(self):
+    def unlimited_adjacents(self):
         adj = [Point(self.x, self.y - 1, self.x_limit, self.y_limit), Point(self.x - 1, self.y, self.x_limit, self.y_limit),
                Point(self.x + 1, self.y, self.x_limit, self.y_limit), Point(self.x, self.y + 1, self.x_limit, self.y_limit)]
 
         return adj
 
-    def adjacents2(self):
-        return [p for p in self.adjacents() if p.x >= 0 and p.y >= 0 and p.x <= self.x_limit and p.y <= self.y_limit]
+    def adjacents(self):
+        return [p for p in self.unlimited_adjacents() if p.x >= 0 and p.y >= 0 and p.x <= self.x_limit and p.y <= self.y_limit]
 
 
 def test_find_adjacents_not_at_edge():
@@ -39,7 +39,7 @@ def test_find_adjacents_not_at_edge():
         Point(2, 1),
         Point(1, 2)])
 
-    assert set(point.adjacents()) == expected_adjacents
+    assert set(point.unlimited_adjacents()) == expected_adjacents
 
 
 def test_can_filter_adjacents_to_map_limits():
@@ -51,7 +51,7 @@ def test_can_filter_adjacents_to_map_limits():
         Point(1, 0, x_limit, y_limit),
         Point(0, 1, x_limit, y_limit)])
 
-    adjacents = set(point.adjacents2())
+    adjacents = set(point.adjacents())
     assert adjacents == expected_adjacents
 
 
@@ -93,7 +93,7 @@ def test_basins():
 
 
 def compute_basin(point: Point, basin, x_limit, y_limit, map):
-    adjacent_points = point.adjacents2()
+    adjacent_points = point.adjacents()
 
     exp = set([x for x in adjacent_points if map[x] <
               9 and map[x] > map[point]]) - basin
@@ -120,7 +120,7 @@ def sum_low_point_risks(map):
 def find_low_points(map):
     low_points = [
         point for point in map
-        if map[point] < min([map[foo] for foo in point.adjacents2()])]
+        if map[point] < min([map[foo] for foo in point.adjacents()])]
 
     return low_points
 
