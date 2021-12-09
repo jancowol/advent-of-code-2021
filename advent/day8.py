@@ -1,4 +1,4 @@
-import advent as advent
+from file_utils import read_file
 
 
 def find_unique_segment_digits(input):
@@ -14,7 +14,7 @@ def parse_lines(input):
 
 
 def read_input():
-    result = advent.read_file('day8-input')
+    result = read_file('day8-input')
     return [parse_line(x) for x in result]
 
 

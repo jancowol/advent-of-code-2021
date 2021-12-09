@@ -20,18 +20,22 @@ def test_can_count_unique_digits():
 
 
 def test_part_2():
-    print('*** part2')
-
-    output_sum = 0
     test_input = 'be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe'
 
-    for x in d8.read_input():
-        val = blahblahblah(x)
-        output_sum += val
+    input = d8.read_input()
+    output_sum = new_func(input)
     # output_val = blahblahblah(parse_line(test_input))
 
     # output_sum += output_val
     print(output_sum)
+
+
+def new_func(input):
+    output_sum = 0
+    for x in input:
+        val = blahblahblah(x)
+        output_sum += val
+    return output_sum
 
 
 def blahblahblah(xxx):
