@@ -58,20 +58,20 @@ def test_can_filter_adjacents_to_map_limits():
 def test_map_build():
     x_limit = len(test_input[0]) - 1
     y_limit = len(test_input) - 1
-    m4 = build_map(test_input, x_limit, y_limit)
+    m4 = build_map_from(test_input)
     print('******************* map building')
     print(m4)
 
 
 def test_can_find_low_points():
-    map = build_map(test_input, 9, 4)
+    map = build_map_from(test_input)
     result = sum_low_point_risks(map)
     assert result == 15
 
 
 def test_actual_data():
     input = read_file('day9-input')
-    map = build_map(input)
+    map = build_map_from(input)
     result = sum_low_point_risks(map)
     print(result)
 
@@ -80,7 +80,7 @@ def test_basins():
     input = read_file('day9-input')
     x_limit = len(input[0]) - 1
     y_limit = len(input) - 1
-    map = build_map(input, x_limit, y_limit)
+    map = build_map_from(input)
     low_points = find_low_points(map)
 
     print('****************')
@@ -125,10 +125,12 @@ def find_low_points(map):
     return low_points
 
 
-def build_map(input, x_limit=99, y_limit=99):
-    row_reading_count = len(input[0])
-    map = list(zip(range(row_reading_count), [reading for reading in input]))
-    m2 = [([(Point(x[0], row[0], x_limit, y_limit), int(x[1]))
+def build_map_from(input):
+    map_width = len(input[0])
+    map_height = len(input)
+
+    map = list(zip(range(map_width), [reading for reading in input]))
+    m2 = [([(Point(x[0], row[0], map_width - 1, map_height - 1), int(x[1]))
            for x in list(zip(range(len(row[1])), row[1]))]) for row in map]
 
     m3 = [item for sub in m2 for item in sub]
