@@ -118,15 +118,11 @@ def sum_low_point_risks(map):
 
 
 def find_low_points(map):
-    max_x = max(map, key=lambda p: p.x)
-    max_y = max(map, key=lambda p: p.y)
+    low_points = [
+        point for point in map
+        if map[point] < min([map[foo] for foo in point.adjacents2()])]
 
-    x_limit = max_x.x
-    y_limit = max_y.y
-    foo = [point for point in map if map[point] < min(
-        [map[foo] for foo in point.adjacents2()])]
-
-    return foo
+    return low_points
 
 
 def build_map(input, x_limit=99, y_limit=99):
