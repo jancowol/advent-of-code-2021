@@ -10,7 +10,7 @@ test_input = [
     '[{[{({}]{}}([{[{{{}}([]',
     '{<[[]]>}<{[{[{[]{()[[[]',
     '[<(<(<(<{}))><([]([]()',
-    '<{([([[(<>()){}]>(<<{{',
+    '<{([(( [(<>()){}]>(<<{{',
     '<{([{{}}[<[[[<>{}]]]>[]]']
 
 
@@ -27,22 +27,13 @@ def test_one():
 def test_two():
     print('---------------test 2')
     input = test_input
-    corrupted_lines = [line[0] for line in find_corrupted_lines(input)]
-    incomplete_lines = [x for x in input if x not in corrupted_lines]
+    incomplete_lines = find_incomplete_lines(input)
     for line in incomplete_lines:
         line_completion = find_line_completion_chars(line)
         print(line_completion)
 
 
 def test_calc_completion_score():
-    print('---------------')
-    # ti = ['}', '}', ']', ']', ')', '}', ')', ']']
-
     input = read_file('day10-input')
-    corrupted_lines = [line[0] for line in find_corrupted_lines(input)]
-    incomplete_lines = [x for x in input if x not in corrupted_lines]
-
-    totals = [complete_and_score_line(x)[1] for x in incomplete_lines]
-    sorted_totals = sorted(totals)
-    mid_index = round(len(sorted_totals) / 2)
-    print(sorted_totals[mid_index])
+    best_score = calc_best_autocomplete_score(input)
+    assert best_score == 3646451424
