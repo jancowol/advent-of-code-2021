@@ -5,6 +5,22 @@ chunk_close = [']', ')', '}', '>']
 error_score = {')': 3, ']': 57, '}': 1197, '>': 25137}
 points_lookup = {')': 1, ']': 2, '}': 3, '>': 4}
 
+
+def find_corrupted_lines(input):
+    stack = []
+    corrupted_lines = []
+    for line in input:
+        for char in line:
+            if char in chunk_open:
+                stack.append(char)
+            if char in chunk_close:
+                last_open_char = stack.pop()
+                if(last_open_char != inverse_of_close(char)):
+                    corrupted_lines.append((line, char))
+                    break
+    return corrupted_lines
+
+
 def complete_and_score_line(line):
     line_completion = find_line_completion_chars(line)
     completion_score = calc_completion_score(line_completion)
