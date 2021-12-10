@@ -146,9 +146,26 @@ def build_map_from(input):
     return m4
 
 
+def flat_map(f, xs): return (y for ys in xs for y in f(ys))
+
+
 def test_map_build3():
     map_width = len(test_input[0])
     map_height = len(test_input)
+    x_range = list(range(map_width))
+    y_range = range(map_height)
+
+    foo = map(lambda x: list(new_func(x)), test_input)
+    boo = zip(y_range, foo)
+    zoo = list(flat_map(lambda x: ((x[0], z[0], z[1]) for z in x[1]), boo))
+    print(list(zoo))
+
+
+def new_func(line):
+    x_range = range(len(line))
+    heights = map(lambda x: int(x), line)
+    heights_with_x = zip(x_range, heights)
+    return heights_with_x
 
 # def test_map_build2():
 #     m4 = build_map_from2(test_input)
