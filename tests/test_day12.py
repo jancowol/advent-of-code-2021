@@ -121,12 +121,12 @@ def test_part2():
         'pj-fs',
         'start-RW']
     map = input_to_map(test_input)
-    result = explore_path2(map, 'start', 0, [])
+    result = explore_path2(map, 'start', [])
 
     assert len(result) == 3509
 
 
-def explore_path2(cave_map, node, fork_count, path):
+def explore_path2(cave_map, node, path):
     new_path = list(path)
     new_path.append(node)
 
@@ -134,40 +134,32 @@ def explore_path2(cave_map, node, fork_count, path):
         return [new_path]
 
     connected_nodes = filter(lambda x: x != 'start', cave_map[node])
-    visitable_nodes = filter(
-        lambda x: can_visit_node(x, new_path), connected_nodes)
+    visitable_nodes = filter(lambda x: can_visit_node(x, new_path), connected_nodes)
 
     subpaths = []
     for connected_node in visitable_nodes:
-        subpath = explore_path2(cave_map, connected_node,
-                                fork_count + 1, new_path)
+        subpath = explore_path2(cave_map, connected_node, new_path)
         subpaths.extend(subpath)
 
     return subpaths
 
 
 def can_visit_node(node, current_path):
-    current_cave_is_small = is_small_cave(node)
 
-    # rules = [(not is_small_cave(node), True)]
+    rules = [
+        (not is_small_cave(node)),
+        (node == 'end'),
+        (current_path.count(node) == 0),
+        (not any_cave_visited_more_than_once(current_path))]
 
-    if(not current_cave_is_small):
-        return True
+    return any(rules)
 
-    if(node == 'end'):
-        return True
 
-    node_visit_count = current_path.count(node)
-    if(node_visit_count == 0):
-        return True
-
+def any_cave_visited_more_than_once(current_path):
     small_caves_in_path = find_small_caves_in(current_path)
     cave_visit_counts = count_by_item(small_caves_in_path)
 
-    has_a_cave_visited_twice = any(
-        x == 2 for x in cave_visit_counts.values())
-
-    return (not has_a_cave_visited_twice)
+    return any(x == 2 for x in cave_visit_counts.values())
 
 
 def find_small_caves_in(seq):
